@@ -4,8 +4,10 @@ public class Main {
 	public static void main(String[] args) {
 		
 		
-		//まずテスト
-		ProductManager.test();
+		//テストスペース
+		ProductManager.printOut();
+		
+		//-----テストスペース終わり-------------
 		
 		/*
 		System.out.println("---商品を5つ追加してすべてを表示する---");

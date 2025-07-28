@@ -2,17 +2,40 @@ package product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class ProductManager {
-	/*
+	
 	//addProduct(Product product)：新たなproductを追加する
 	public static void addProduct(Product product) {
 		//まずDB接続
 		String url = "jdbc:mysql://localhost:3306/product_management";
 		String user = "root";
 		String pass = "root";
-		//Connection con = DriverManager.getConnection(url,user,pass);
+		try {
+			//データベース接続
+			Connection con = DriverManager.getConnection(url,user,pass);
+			//これからSQL文を作るよ文
+			Statement stmt = con.createStatement();
+			// データをSQL文に埋め込む（※SQLインジェクションを避けるなら PreparedStatement がより安全だけど、今回はまず動くことを優先！）
+			String sql = String.format(
+				"INSERT INTO products (id, name, price, stock) VALUES (%d, '%s', %d, %d)",
+				product.getId(), product.getName(), product.getPrice(), product.getStock()
+			);
+
+			int rowsInserted = stmt.executeUpdate(sql); // ← INSERT には executeUpdate を使う！
+			System.out.println(rowsInserted + " 件の商品を追加しました");
+
+			con.close();
+		}catch(SQLException e){
+			System.out.println("データベース接続失敗");
+			System.out.println("原因：" +e.getMessage());
+			e.printStackTrace();
+		}
+		
 	}
 
 	//removeProduct(int id)：idを引数としてproductを削除する
@@ -32,8 +55,34 @@ public class ProductManager {
 		String url = "jdbc:mysql://localhost:3306/product_management";
 		String user = "root";
 		String pass = "root";
-		//Connection con = DriverManager.getConnection(url,user,pass);
-	}*/
+		try {
+			//データベース接続
+			Connection con = DriverManager.getConnection(url,user,pass);
+			//これからSQL文を作るよ文
+			Statement stmt = con.createStatement();
+			//SQL文
+			String sql = "SELECT * FROM products";
+			//SQL文をデータベースに反映させる文
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				//データベースから値を取り出す
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				//productオブジェクトのインスタンス生成
+				Product p = new Product(id,name,price,stock);
+				p.print();
+				
+			}
+		}catch(SQLException e) {
+			System.out.println("データベース接続失敗");
+			System.out.println("原因：" +e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 
 	public static void test() {
 		String url = "jdbc:mysql://localhost:3306/product_management";
