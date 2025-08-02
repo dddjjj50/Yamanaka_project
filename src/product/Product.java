@@ -32,7 +32,7 @@ public class Product {
 	}
 	
 	//セッター。
-	public void setInt(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public void setName(String name) {
@@ -43,11 +43,5 @@ public class Product {
 	}
 	public void setStock(int stock) {
 		this.stock = stock;
-	}
-	
-	//データベースの中身を表示するメソッド
-	public void print() {
-		System.out.printf("id=%d, name=%s, price=%d, stock=%d\n",
-				id,name,price,stock);
 	}
 }

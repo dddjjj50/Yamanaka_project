@@ -1,17 +1,14 @@
 package product;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class ProductManager {
-	
 	//addProduct(Product product)：新たなproductを追加する
 	public static void addProduct(Product product) {
-		//まずDB接続
+		//まずDB接続の材料
 		String url = "jdbc:mysql://localhost:3306/product_management";
 		String user = "root";
 		String pass = "root";
@@ -26,27 +23,60 @@ public class ProductManager {
 				product.getId(), product.getName(), product.getPrice(), product.getStock()
 			);
 
-			int rowsInserted = stmt.executeUpdate(sql); // ← INSERT には executeUpdate を使う！
-			System.out.println(rowsInserted + " 件の商品を追加しました");
-
+			stmt.executeUpdate(sql); // ← INSERT には executeUpdate を使う！
 			con.close();
 		}catch(SQLException e){
 			System.out.println("データベース接続失敗");
 			System.out.println("原因：" +e.getMessage());
 			e.printStackTrace();
 		}
-		
 	}
 
 	//removeProduct(int id)：idを引数としてproductを削除する
 	public static void removeProduct(int id) {
-
+		String url = "jdbc:mysql://localhost:3306/product_management";
+		String user = "root";
+		String pass = "root";
+		try {
+			Connection con = DriverManager.getConnection(url,user,pass);
+			Statement stmt = con.createStatement();
+			String sql = String.format(
+					"DELETE FROM products WHERE id = %d",id);
+			stmt.executeUpdate(sql);
+			con.close();
+		}catch(SQLException e){
+			System.out.println("データベース接続失敗");
+			System.out.println("原因：" +e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	//getProductByName(String name)：
 	//nameを引数としてproduct情報を取得する
 	public static void getProductByName(String name) {
+		String url = "jdbc:mysql://localhost:3306/product_management";
+		String user = "root";
+		String pass = "root";
+		try {
+			Connection con = DriverManager.getConnection(url,user,pass);
+			Statement stmt = con.createStatement();
+			String sql = String.format(
+					"SELECT * FROM products WHERE name='%s'",name);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				System.out.printf("Product: id=%d, name=%s, price=%d, stock=%d%n",
+						id, name, price, stock);
 
+			}
+		}catch(SQLException e){
+			System.out.println("データベース接続失敗");
+			System.out.println("原因：" +e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	//データをすべて表示するメソッド
@@ -56,26 +86,21 @@ public class ProductManager {
 		String user = "root";
 		String pass = "root";
 		try {
-			//データベース接続
 			Connection con = DriverManager.getConnection(url,user,pass);
-			//これからSQL文を作るよ文
 			Statement stmt = con.createStatement();
-			//SQL文
 			String sql = "SELECT * FROM products";
-			//SQL文をデータベースに反映させる文
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
-				//データベースから値を取り出す
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				int price = rs.getInt("price");
 				int stock = rs.getInt("stock");
-				//productオブジェクトのインスタンス生成
-				Product p = new Product(id,name,price,stock);
-				p.print();
 				
+				System.out.printf("Product: id=%d, name=%s, price=%d, stock=%d\n",
+						id,name,price,stock);
 			}
+			con.close();
 		}catch(SQLException e) {
 			System.out.println("データベース接続失敗");
 			System.out.println("原因：" +e.getMessage());
@@ -98,9 +123,6 @@ public class ProductManager {
 			System.out.println("原因：" +e.getMessage());
 			e.printStackTrace();
 		}
-			
-		
-		
 	}
 
 }
