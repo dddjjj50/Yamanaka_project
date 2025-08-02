@@ -25,7 +25,5 @@ public class SumNumbers2 {
 		System.out.printf("加算結果：%d",calculateSum(num1,num2));
 		
 		num.close();
-
 	}
-
 }

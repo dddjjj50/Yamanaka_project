@@ -4,7 +4,7 @@ public class ShowSeasons {
 
 	public static void main(String[] args) {
 		//月を意味する変数を宣言
-		int month=13;
+		int month=1;
 		
 		//switch文
 		switch(month) {
@@ -32,10 +32,5 @@ public class ShowSeasons {
 			System.out.printf("%d月は存在しないです。",month);
 			break;
 		}
-		
-		//出力
-		
-
 	}
-
 }

@@ -20,7 +20,5 @@ public class Circle {
 		System.out.printf("円の面積：%.1f",getCircleArea(r));
 		
 		r2.close();
-
 	}
-
 }

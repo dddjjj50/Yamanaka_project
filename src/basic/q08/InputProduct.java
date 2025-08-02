@@ -13,9 +13,7 @@ public class InputProduct {
 		System.out.println("価格を入力してください：");
 		int price = q08.nextInt();
 		
-		System.out.printf("商品名は%sです。価格は%dです。",item,price);
+		System.out.printf("商品名は%sです。価格は%d円です。",item,price);
 		q08.close();
-
 	}
-
 }

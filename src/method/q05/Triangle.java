@@ -24,9 +24,6 @@ public class Triangle {
 		//面積＝メソッド使用
 		System.out.print("三角形の面積：" +getTriangleArea(teihen,high));
 		
-		
 		num.close();
-
 	}
-
 }
