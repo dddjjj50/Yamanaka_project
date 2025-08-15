@@ -1,5 +1,7 @@
 package product;
 
+import java.util.List;
+
 public class Main {	
 	public static void main(String[] args) {
 		//---商品を5つ追加してすべてを表示する---
@@ -29,6 +31,27 @@ public class Main {
 		System.out.println("---商品名「米」の情報を表示する---");
 		ProductManager.getProductByName("米");
 		System.out.println();	//改行
+		//=================================================
+		System.out.println("---商品名「ソファ」の情報と割引率30%の情報を表示する---");
+		ProductManager sofa = new ProductManager();
+		List<Product> sofaList = sofa.search("ソファ");
+		
+		double discountRate = 0.3;
+		
+		for(Product ps : sofaList) {
+			DiscountedProduct dp = new DiscountedProduct(
+					ps.getId(),ps.getName(),ps.getPrice(),ps.getStock(),discountRate
+			);
+			System.out.printf(
+					", 割引率=%.1f, 割引後価格=%.0f%n",
+			        discountRate , dp.calculateDiscountedPrice()
+			);
+		}
+		System.out.println();	//改行
+		//=================================================
+		System.out.println("---商品名「Tシャツ」を検索して表示する---");
+		Searchable searchable = new ProductManager();
+		searchable.search("Tシャツ");
 	}
 
 }
