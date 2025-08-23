@@ -16,8 +16,9 @@ public class ProductDB_part2 {
 		String url = "jdbc:mysql://localhost:3306/product_management";
 		String user = "root";
 		String pass = "root";
+		
 		try {
-			Connection con = DriverManager.getConnection(url,user,pass);
+			Connection con = DriverManager.getConnection(url, user, pass);
 			
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM products";
@@ -37,15 +38,13 @@ public class ProductDB_part2 {
 				System.out.println("category_id: " + category_id);
 				System.out.println(); //改行
 			}
-				
+			
 			con.close();
 			
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("DB接続失敗");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
 	}
-
 }

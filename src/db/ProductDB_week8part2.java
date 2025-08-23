@@ -55,7 +55,7 @@ public class ProductDB_week8part2 {
 			con.close();
 
 		} catch (SQLException e) {
-			System.out.println("失敗");
+			System.out.println("データベース接続失敗");
 			System.out.println("原因：" + e.getMessage());
 			e.printStackTrace();
 		}
